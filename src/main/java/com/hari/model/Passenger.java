@@ -1,30 +1,40 @@
 package com.hari.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Entity
 @Builder
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Passenger {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "bookings" })
+public class Passenger extends BaseModel {
+    @Column(nullable = false)
     private String name;
-    private String email;
-    private String password;
-    private String phoneName;
-    private Date createAt;
 
+   @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String phoneName;
+
+    @OneToMany(mappedBy = "passenger")
+    private List<Booking> bookingList = new ArrayList<Booking>();
 }
