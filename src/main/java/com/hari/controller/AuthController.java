@@ -15,7 +15,7 @@ import com.hari.request.PassengerSignUpRequestDto;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private AuthService authService;
+    private final AuthService authService;
 
     public AuthController(AuthService authService) {
         this.authService = authService;
