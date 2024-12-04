@@ -4,8 +4,9 @@ import com.hari.config.JwtProvider;
 import com.hari.request.AuthRequest;
 import com.hari.response.AuthResponse;
 import com.hari.service.AuthService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -49,7 +50,6 @@ public class AuthController {
     public ResponseEntity<?> signIn(@RequestBody AuthRequest request, HttpServletResponse response){
         Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
         if (authentication.isAuthenticated()) {
-
             String token = JwtProvider.generateToken(authentication);
             ResponseCookie cookie=ResponseCookie.from("jwt",token)
                             .httpOnly(true)
@@ -58,15 +58,27 @@ public class AuthController {
                                             .maxAge(cookieExpiry)
                     .build();
             response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-
-
             return new ResponseEntity<>(token, HttpStatus.OK);
         }
-
         return new ResponseEntity<>(AuthResponse.builder().success(false).build(), HttpStatus.UNAUTHORIZED);
 
 
     }
 
+    @GetMapping("/validate")
+    public ResponseEntity<?> validate(HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+
+        // Check if cookies are null
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                System.out.println(cookie.getName() + " " + cookie.getValue());
+            }
+        } else {
+            System.out.println("No cookies found in the request.");
+        }
+        return new ResponseEntity<>("success", HttpStatus.OK);
+
+    }
 
 }

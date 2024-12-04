@@ -41,7 +41,7 @@ public class SpringSecurity implements WebMvcConfigurer {
         http.sessionManagement(management->management.sessionCreationPolicy(
                         SessionCreationPolicy.STATELESS
                 )).authorizeHttpRequests(authorize->authorize.requestMatchers("/api/*").authenticated()
-                        .requestMatchers("/api/auth/signin/*").
+                        .requestMatchers("/api/auth/validate/*").
                         permitAll()
                         .anyRequest().permitAll()
                 ).addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class).csrf(AbstractHttpConfigurer::disable)
@@ -53,9 +53,9 @@ public class SpringSecurity implements WebMvcConfigurer {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration cfg=new CorsConfiguration();
-                cfg.setAllowedOrigins(Collections.singletonList("/*"));
-                cfg.setAllowedMethods(Collections.singletonList("/*"));
-                cfg.setAllowedHeaders(Collections.singletonList("/*"));
+                cfg.setAllowedOrigins(Collections.singletonList("*"));
+                cfg.setAllowedMethods(Collections.singletonList("*"));
+                cfg.setAllowedHeaders(Collections.singletonList("*"));
                 cfg.setAllowCredentials(true);
                 cfg.setExposedHeaders(Collections.singletonList("Authorization"));
                 cfg.setMaxAge(3600L);
