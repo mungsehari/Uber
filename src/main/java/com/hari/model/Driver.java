@@ -35,7 +35,7 @@ public class Driver extends BaseModel {
 
     private String aadharCard;
 
-    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL.ALL)
+    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
     private Car car;
 
 
