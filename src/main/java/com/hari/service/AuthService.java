@@ -1,12 +1,14 @@
 package com.hari.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
+
 
 import com.hari.dto.PassengerDto;
 import com.hari.model.Passenger;
 import com.hari.repository.PassengerRepository;
 import com.hari.request.PassengerSignUpRequestDto;
+import org.springframework.stereotype.Service;
+
 
 @Service
 public class AuthService {
@@ -24,7 +26,7 @@ public class AuthService {
                 .email(passengerSignUpRequestDto.getEmail())
                 .name(passengerSignUpRequestDto.getName())
                 .password(bCryptPasswordEncoder.encode(passengerSignUpRequestDto.getPassword()))
-                .phoneName(passengerSignUpRequestDto.getPhoneName())
+                .phoneNumber(passengerSignUpRequestDto.getPhoneName())
                 .build();
 
         Passenger newPassenger = passengerRepository.save(passenger);
