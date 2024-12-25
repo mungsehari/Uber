@@ -4,13 +4,7 @@ import java.util.Date;
 
 import com.hari.status.BookingStatus;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Booking extends BaseModel {
+
 
     @Enumerated(value = EnumType.STRING)
     private BookingStatus bookingStatus;
@@ -41,5 +36,11 @@ public class Booking extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Passenger passenger;
+
+    @OneToOne
+    private ExactLocation startLocation;
+
+    @OneToOne
+    private ExactLocation endLocation;
 
 }
