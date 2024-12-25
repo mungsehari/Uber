@@ -30,7 +30,7 @@ public class PassengerDto {
                 .createAt(p.getCreatedAt())
                 .email(p.getEmail())
                 .password(p.getPassword())
-                .phoneName(p.getPhoneName())
+                .phoneName(p.getPhoneNumber())
                 .build();
         return result;
     }
